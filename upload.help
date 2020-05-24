@@ -1,0 +1,4 @@
+#To upload:
+git add .  #要上传的文件名
+git commit -m 'XXX' #修改注释
+git push
