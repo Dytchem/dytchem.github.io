@@ -1,0 +1,20 @@
+
+.xl-bg-white {
+	background-color: white;
+}
+
+.xl-margin {
+	margin: 15px;
+}
+
+.xl-list-top {
+	margin-top: 30px;
+}
+
+#LAY-component-grid-mobile .layui-card-body {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	height: 200px;
+}
