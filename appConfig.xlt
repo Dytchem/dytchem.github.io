@@ -1,7 +1,7 @@
 {
 	"appName": "MyApp",
-	"appPackageName": "top.webcat.myapp",
-	"appVersionName": "1.0",
+	"appPackageName": "io.github.dytchem",
+	"appVersionName": "2.0",
 	"appVersionCode": 100000,
 	"data": {		
 		"启用顶栏": true,
