@@ -66,6 +66,45 @@
             background-color: #0ff;
             z-index: 0;
         }
+
+        .wasd-keys {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            justify-items: center;
+            align-items: center;
+        }
+
+        #wKey {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        #aKey {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        #sKey {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        #dKey {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .wasd-keys button {
+            font-size: 24px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -74,6 +113,12 @@
     <h2 id="person" class="number">Score: 0 &nbsp; Enemy: 0 &nbsp; Friend: 0</h2>
     <div id="container">
         <div id="board"><canvas id="cvs" width="500" height="500"></canvas></div>
+    </div>
+    <div class="wasd-keys">
+        <button id="wKey">W</button>
+        <button id="aKey">A</button>
+        <button id="sKey">S</button>
+        <button id="dKey">D</button>
     </div>
 </body>
 
@@ -106,7 +151,7 @@
     const prs = document.getElementById("person");
 
     // 变量
-    let health = 1, good = 0, bad = 0, scroe = 0;
+    let health = 1, good = 0, bad = 0, score = 0, e = { key: "w" };
 
     // 类定义
     class Cell { // 迷宫单元
@@ -227,7 +272,7 @@
                     break;
                 case " ":
                     this.waves.release(this);
-                    prs.textContent = "Score: " + --scroe + "   Enemy: " + bad + "   Friend: " + good;
+                    prs.textContent = "Score: " + --score + "   Enemy: " + bad + "   Friend: " + good;
                     for (let i = 1; i <= level; ++i)
                     {
                         let tmp;
@@ -244,7 +289,7 @@
                 this.check.visBad[this.x][this.y].stop();
             if (this.x == this.target.x && this.y == this.target.y)
             {
-                prs.textContent = "Score: " + ++scroe + "   Enemy: " + bad + "   Friend: " + good;
+                prs.textContent = "Score: " + ++score + "   Enemy: " + bad + "   Friend: " + good;
                 this.target.refresh();
             }
         }
@@ -315,7 +360,7 @@
             for (let i = 0; i < goodsMax; ++i) if (this.persons[i].show.style.display == "none"
                 && this.persons[i].x != this.player.x && this.persons[i].y != this.player.y)
             {
-                prs.textContent = "Score: " + scroe + "   Enemy: " + bad + "   Friend: " + ++good;
+                prs.textContent = "Score: " + score + "   Enemy: " + bad + "   Friend: " + ++good;
                 this.persons[i].start();
                 break;
             }
@@ -345,7 +390,7 @@
             this.timer = setInterval(this.move.bind(this), (Math.random() * 1.8 + 0.2) * 1000);
         }
         stop() {
-            prs.textContent = "Score: " + scroe + "   Enemy: " + --bad + "   Friend: " + good;
+            prs.textContent = "Score: " + score + "   Enemy: " + --bad + "   Friend: " + good;
             clearInterval(this.timer);
             this.show.style.display = "none";
             this.vis[this.x][this.y] = false;
@@ -386,7 +431,7 @@
             for (let i = 0; i < badsMax; ++i) if (this.persons[i].show.style.display == "none"
                 && this.persons[i].x != this.player.x && this.persons[i].y != this.player.y)
             {
-                prs.textContent = "Score: " + scroe + "   Enemy: " + ++bad + "   Friend: " + good;
+                prs.textContent = "Score: " + score + "   Enemy: " + ++bad + "   Friend: " + good;
                 this.persons[i].start();
                 break;
             }
@@ -449,6 +494,24 @@
     let g = new Goods(c, m, p);
     let b = new Bads(c, m, p);
     let s = new Summon(g, b);
+
+    // 移动端适配 - Powered By YiYan
+    document.getElementById("wKey").addEventListener("click", function () {
+        e.key = "w";
+        p.handleKeyPress(e);
+    });
+    document.getElementById("aKey").addEventListener("click", function () {
+        e.key = "a";
+        p.handleKeyPress(e);
+    });
+    document.getElementById("sKey").addEventListener("click", function () {
+        e.key = "s";
+        p.handleKeyPress(e);
+    });
+    document.getElementById("dKey").addEventListener("click", function () {
+        e.key = "d";
+        p.handleKeyPress(e);
+    });
 
 </script>
 
