@@ -102,6 +102,12 @@
             grid-row: 2;
         }
 
+        #Space {
+            grid-column: 3;
+            grid-row: 1;
+            background-color: #0ff;
+        }
+
         .wasd-keys button {
             display: none;
             width: 100px;
@@ -122,6 +128,7 @@
             <button id="aKey">A</button>
             <button id="sKey">S</button>
             <button id="dKey">D</button>
+            <button id="Space"> </button>
         </div>
     </div>
 
@@ -324,7 +331,6 @@
         }
         stop() {
             clearInterval(this.timer);
-            //this.show.style.display = "none"; // ����
             this.vis[this.x][this.y] = false;
             hlt.textContent = "Health: " + ++health;
             if (health > 10) health = 10;
@@ -520,8 +526,13 @@
             e.key = "d";
             p.handleKeyPress(e);
         });
+        document.getElementById("Space").addEventListener("click", function () {
+            e.key = " ";
+            p.handleKeyPress(e);
+        });
         document.getElementById("wKey").style.display = document.getElementById("aKey").style.display
-            = document.getElementById("sKey").style.display = document.getElementById("dKey").style.display = "inline"
+            = document.getElementById("sKey").style.display = document.getElementById("dKey").style.display
+            = document.getElementById("Space").style.display = "inline"
     }
 
 </script>
