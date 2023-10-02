@@ -405,12 +405,18 @@
             clearInterval(this.timer);
             this.show.style.display = "none";
             this.vis[this.x][this.y] = false;
+            this.change();
             hlt.textContent = "Health: " + --health;
             if (health < 1)
             {
                 alert("You lose!!!");
                 hlt.style.color = "red";
             }
+        }
+        change() {
+            this.x = Math.floor(Math.random() * level) + 1;
+            this.y = Math.floor(Math.random() * level) + 1;
+            this.location();
         }
         silentStop() {
             prs.textContent = "Score: " + score + "   Enemy: " + --bad + "   Friend: " + good;
