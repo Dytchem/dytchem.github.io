@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣味走迷宫</title>
+    <style>
+        .number {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            white-space: pre;
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+
+        #board {
+            position: relative;
+        }
+
+        .player {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #00f;
+            border: 1px solid #000000;
+            opacity: 0.7;
+            z-index: 4;
+        }
+
+        .good {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #0f0;
+            border: 1px solid #000000;
+            opacity: 0.7;
+            z-index: 3;
+        }
+
+        .bad {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #f00;
+            border: 1px solid #000000;
+            opacity: 0.7;
+            z-index: 2;
+        }
+
+        .target {
+            position: absolute;
+            width: 21px;
+            height: 21px;
+            background-color: #ff0;
+            z-index: 1;
+        }
+
+        .wave {
+            position: absolute;
+            background-color: #0ff;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="health" class="number">Health: 1</h1>
+    <h2 id="person" class="number">Scroe: 0 &nbsp; Enemy: 0 &nbsp; Friend: 0</h2>
+    <div id="container">
+        <div id="board"><canvas id="cvs" width="500" height="500"></canvas></div>
+    </div>
+</body>
+
+<script>
+    "use strict"
+    // 欢迎
+    alert("欢迎来到《趣味走迷宫》！！！\n\
+玩法：\n\
+1. 你是蓝色方块，可按W、S、A、D键在迷宫里进行上、下、左、右移动\n\
+2. 你的目标是到达黄色地标，这会使你的Score加1\n\
+3. 红色方块为敌人，碰到它会使你的Health减1，同时敌人也会消失\n\
+4. 绿色方块为友人，碰到它会使你的Health加1，同时友人会瞬移走\n\
+5. 敌人5s生成1个，上限400个；友人20s生成一个，上限10个\n\
+6. 你可以按空格键以Score减1的代价发出十字冲击波，它能消灭命中的敌人并同时得到友人的效果\n\
+7. 当你的Health为0时，游戏结束，你仍然可以继续游玩，但Health会为红色——刷新网页以重新游戏\n\
+8. 在游戏中去争取尽可能大的Score吧\n\
+注意：\n\
+所有的相关参量都可以通过HTML源码修改，若需游戏平衡性调整可自行进行修改，它们主要集中在JavaScript的常量区")
+
+    // 常量
+    const level = 20, size = 25, personSize = 15, d0 = (size - personSize) / 2;
+    const goodsMax = 10, badsMax = 400, goodsTime = 20000, badsTime = 5000;
+    const updateTime = 50;
+    const x0 = (window.innerHeight - level * size) / 2, y0 = (window.innerWidth - level * size) / 2;
+    const dr = ["w", "a", "d", "s"], dx = [0, -1, 1, 0], dy = [-1, 0, 0, 1];
+    const brd = document.getElementById("board");
+    const cvs = document.getElementById("cvs");
+    const ctx = cvs.getContext("2d");
+    const hlt = document.getElementById("health");
+    const prs = document.getElementById("person");
+
+    // 变量
+    let health = 1, good = 0, bad = 0, scroe = 0;
+
+    // 类定义
+    class Cell { // 迷宫单元
+        constructor() {
+            this.w = this.s = this.a = this.d = true;
+        }
+    }
+
+    class Maze { // 迷宫
+        constructor() {
+            this.cells = Array.from({ length: level + 2 }, () => Array.from({ length: level + 2 }, () => new Cell()));
+            this.vis = Array.from({ length: level + 2 }, () => Array.from({ length: level + 2 }, () => false));
+            for (let i = 1; i <= level; ++i) this.vis[i][0] = this.vis[i][level + 1] = this.vis[0][i] = this.vis[level + 1][i] = true;
+            this.dfs(1, 1);
+            this.update();
+            this.draw();
+        }
+        dfs(x, y) // x, y : 1 ~ level
+        {
+            this.vis[x][y] = true;
+            let choices = [0, 1, 2, 3];
+            choices.sort(() => { return 0.5 - Math.random(); });
+            for (let i of choices)
+            {
+                let x1 = x + dx[i], y1 = y + dy[i];
+                if (this.vis[x1][y1]) continue;
+                this.cells[x][y][dr[i]] = this.cells[x1][y1][dr[3 - i]] = false;
+                this.dfs(x1, y1);
+            }
+        }
+        update() { // 破树成图，避免唯一路径被Enemy堵死
+            for (let i = 0; i < updateTime; ++i)
+            {
+                let x0, y0, j;
+                do
+                {
+                    x0 = Math.floor(Math.random() * (level - 3)) + 2;
+                    y0 = Math.floor(Math.random() * (level - 3)) + 2;
+                    j = Math.floor(Math.random() * 4);
+                } while (!this.cells[x0][y0][dr[j]])
+                this.cells[x0][y0][dr[j]] = false;
+                this.cells[x0 + dx[j]][y0 + dy[j]][dr[3 - j]] = false;
+            }
+        }
+        draw() { // 绘制迷宫
+            ctx.beginPath();
+            for (let i = 1; i <= level; ++i) for (let j = 1; j <= level; ++j)
+            {
+                if (this.cells[i][j].w)
+                {
+                    ctx.moveTo((i - 1) * size, (j - 1) * size);
+                    ctx.lineTo(i * size, (j - 1) * size);
+                }
+                if (this.cells[i][j].s)
+                {
+                    ctx.moveTo((i - 1) * size, j * size);
+                    ctx.lineTo(i * size, j * size);
+                }
+                if (this.cells[i][j].a)
+                {
+                    ctx.moveTo((i - 1) * size, (j - 1) * size);
+                    ctx.lineTo((i - 1) * size, j * size);
+                }
+                if (this.cells[i][j].d)
+                {
+                    ctx.moveTo(i * size, (j - 1) * size);
+                    ctx.lineTo(i * size, j * size);
+                }
+            }
+            ctx.closePath();
+            ctx.stroke();
+        }
+    }
+
+    class Check { // 迷宫单元占据情况
+        constructor() {
+            this.visGood = Array.from({ length: level + 1 }, () => Array.from({ length: level + 1 }, () => false));
+            this.visBad = Array.from({ length: level + 1 }, () => Array.from({ length: level + 1 }, () => false));
+        }
+    }
+
+    class Player { // 玩家
+        constructor(check, maze, target, waves) {
+            this.check = check;
+            this.cells = maze.cells;
+            this.x = this.y = 1;
+            this.show = document.createElement("div");
+            this.show.className = "player";
+            this.target = target;
+            this.waves = waves;
+            this.location();
+            brd.appendChild(this.show);
+            document.addEventListener('keydown', (event) => this.handleKeyPress(event));
+        }
+        location() {
+            this.show.style.top = (this.y - 1) * size + d0 + "px";
+            this.show.style.left = (this.x - 1) * size + d0 + "px";
+        }
+        handleKeyPress(event) {
+            if (this.cells[this.x][this.y][event.key] !== false && event.key != " ") return;
+            switch (event.key)  
+            {
+                case "w":
+                    this.y--;
+                    this.location();
+                    break;
+                case "a":
+                    this.x--;
+                    this.location();
+                    break;
+                case "d":
+                    this.x++;
+                    this.location();
+                    break;
+                case "s":
+                    this.y++;
+                    this.location();
+                    break;
+                case " ":
+                    this.waves.release(this);
+                    prs.textContent = "Score: " + --scroe + "   Enemy: " + bad + "   Friend: " + good;
+                    for (let i = 1; i <= level; ++i)
+                    {
+                        let tmp;
+                        if (tmp = this.check.visGood[this.x][i]) tmp.stop();
+                        if (tmp = this.check.visBad[this.x][i]) ++health, tmp.stop();
+                        if (tmp = this.check.visGood[i][this.y]) tmp.stop();
+                        if (tmp = this.check.visBad[i][this.y]) ++health, tmp.stop();
+                    }
+                    break;
+            }
+            if (this.check.visGood[this.x][this.y])
+                this.check.visGood[this.x][this.y].stop();
+            if (this.check.visBad[this.x][this.y])
+                this.check.visBad[this.x][this.y].stop();
+            if (this.x == this.target.x && this.y == this.target.y)
+            {
+                prs.textContent = "Score: " + ++scroe + "   Enemy: " + bad + "   Friend: " + good;
+                this.target.refresh();
+            }
+        }
+    }
+
+    class Good { // Friend
+        constructor(check, maze, player) {
+            this.vis = check.visGood;
+            this.cells = maze.cells;
+            this.player = player;
+            this.x = Math.floor(Math.random() * level) + 1;
+            this.y = Math.floor(Math.random() * level) + 1;
+            this.show = document.createElement("div");
+            this.show.className = "good";
+            this.location();
+            this.show.style.display = "none";
+            brd.appendChild(this.show);
+        }
+        location() {
+            this.show.style.top = (this.y - 1) * size + d0 + "px";
+            this.show.style.left = (this.x - 1) * size + d0 + "px";
+        }
+        start() {
+            this.show.style.display = "inline";
+            this.vis[this.x][this.y] = this;
+            this.timer = setInterval(this.move.bind(this), (Math.random() * 1.8 + 0.2) * 1000);
+        }
+        stop() {
+            clearInterval(this.timer);
+            //this.show.style.display = "none"; // ����
+            this.vis[this.x][this.y] = false;
+            hlt.textContent = "Health: " + ++health;
+            if (health > 10) health = 10;
+            this.change();
+            this.start();
+        }
+        change() {
+            this.x = Math.floor(Math.random() * level) + 1;
+            this.y = Math.floor(Math.random() * level) + 1;
+            this.location();
+        }
+        move() {
+            let choices = [0, 1, 2, 3];
+            choices.sort(() => { return 0.5 - Math.random(); });
+            for (let i of choices)
+            {
+                let x1 = this.x + dx[i], y1 = this.y + dy[i];
+                if (this.cells[this.x][this.y][dr[i]] || this.vis[x1][y1]) continue;
+                this.vis[this.x][this.y] = false;
+                this.x = x1, this.y = y1;
+                this.vis[this.x][this.y] = this;
+                this.location();
+                break;
+            }
+            if (this.vis[this.player.x][this.player.y])
+            {
+                this.stop();
+            }
+        }
+    }
+
+    class Goods { // 所右Friend
+        constructor(c, m, p) {
+            this.player = p;
+            this.persons = Array.from({ length: goodsMax }, () => new Good(c, m, p));
+        }
+        add() {
+            for (let i = 0; i < goodsMax; ++i) if (this.persons[i].show.style.display == "none"
+                && this.persons[i].x != this.player.x && this.persons[i].y != this.player.y)
+            {
+                prs.textContent = "Score: " + scroe + "   Enemy: " + bad + "   Friend: " + ++good;
+                this.persons[i].start();
+                break;
+            }
+        }
+    }
+
+    class Bad { // Enemy
+        constructor(check, maze, player) {
+            this.vis = check.visBad;
+            this.cells = maze.cells;
+            this.player = player;
+            this.x = Math.floor(Math.random() * level) + 1;
+            this.y = Math.floor(Math.random() * level) + 1;
+            this.show = document.createElement("div");
+            this.show.className = "bad";
+            this.location();
+            this.show.style.display = "none";
+            brd.appendChild(this.show);
+        }
+        location() {
+            this.show.style.top = (this.y - 1) * size + d0 + "px";
+            this.show.style.left = (this.x - 1) * size + d0 + "px";
+        }
+        start() {
+            this.show.style.display = "inline";
+            this.vis[this.x][this.y] = this;
+            this.timer = setInterval(this.move.bind(this), (Math.random() * 1.8 + 0.2) * 1000);
+        }
+        stop() {
+            prs.textContent = "Score: " + scroe + "   Enemy: " + --bad + "   Friend: " + good;
+            clearInterval(this.timer);
+            this.show.style.display = "none";
+            this.vis[this.x][this.y] = false;
+            hlt.textContent = "Health: " + --health;
+            if (health < 1)
+            {
+                alert("You lose!!!");
+                hlt.style.color = "red";
+            }
+        }
+        move() {
+            let choices = [0, 1, 2, 3];
+            choices.sort(() => { return 0.5 - Math.random(); });
+            for (let i of choices)
+            {
+                let i = Math.floor(Math.random() * 4);
+                let x1 = this.x + dx[i], y1 = this.y + dy[i];
+                if (this.cells[this.x][this.y][dr[i]] || this.vis[x1][y1]) continue;
+                this.vis[this.x][this.y] = false;
+                this.x = x1, this.y = y1;
+                this.vis[this.x][this.y] = this;
+                this.location();
+                break;
+            }
+            if (this.vis[this.player.x][this.player.y])
+            {
+                this.stop();
+            }
+        }
+    }
+
+    class Bads { // 所有Enemy
+        constructor(c, m, p) {
+            this.player = p;
+            this.persons = Array.from({ length: badsMax }, () => new Bad(c, m, p));
+        }
+        add() {
+            for (let i = 0; i < badsMax; ++i) if (this.persons[i].show.style.display == "none"
+                && this.persons[i].x != this.player.x && this.persons[i].y != this.player.y)
+            {
+                prs.textContent = "Score: " + scroe + "   Enemy: " + ++bad + "   Friend: " + good;
+                this.persons[i].start();
+                break;
+            }
+        }
+    }
+
+    class Summon { // 生成器
+        constructor(goods, bads) {
+            this.g = setInterval(() => goods.add(), goodsTime);
+            this.b = setInterval(() => bads.add(), badsTime);
+        }
+    }
+
+    class Target { // 目的地
+        constructor() {
+            this.show = document.createElement("div");
+            this.show.className = "target";
+            this.refresh();
+            brd.appendChild(this.show);
+        }
+        refresh() {
+            this.x = Math.floor(Math.random() * level) + 1;
+            this.y = Math.floor(Math.random() * level) + 1;
+            this.show.style.top = (this.y - 1) * size + 2 + "px";
+            this.show.style.left = (this.x - 1) * size + 2 + "px";
+        }
+    }
+
+    class Waves { // 十字冲击波
+        constructor() {
+            this.show1 = document.createElement("div");
+            this.show1.className = "wave";
+            this.show1.style.display = "none";
+            this.show1.style.left = 0;
+            this.show1.style.width = level * size + "px";
+            this.show1.style.height = personSize + "px";
+            brd.appendChild(this.show1);
+            this.show2 = document.createElement("div");
+            this.show2.className = "wave";
+            this.show2.style.display = "none";
+            this.show2.style.top = 0;
+            this.show2.style.width = personSize + "px";
+            this.show2.style.height = level * size + "px";
+            brd.appendChild(this.show2);
+        }
+        release(player) {
+            this.show1.style.top = (player.y - 1) * size + d0 + "px";
+            this.show2.style.left = (player.x - 1) * size + d0 + "px";
+            this.show1.style.display = this.show2.style.display = "inline";
+            setTimeout(() => { this.show1.style.display = this.show2.style.display = "none"; }, 500);
+        }
+    }
+
+    // 类实例
+    let c = new Check();
+    let m = new Maze();
+    let t = new Target();
+    let w = new Waves();
+    let p = new Player(c, m, t, w);
+    let g = new Goods(c, m, p);
+    let b = new Bads(c, m, p);
+    let s = new Summon(g, b);
+
+</script>
+
+</html>
