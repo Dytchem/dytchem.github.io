@@ -1,7 +1,7 @@
 # Dytchem's Web主页
 ![dytchem.github.io](https://dytchem.github.io/)
-
 ===
+
 # 趣味迷宫 - 学校Web程序设计选修课大作业
 ![./maze.html](https://dytchem.github.io/maze.html)
 ![屏幕截图1](assets/屏幕截图(705).png)
@@ -23,7 +23,4 @@
 所有的相关参量都可以通过HTML源码修改，若需游戏平衡性调整可自行进行修改，它们主要集中在JavaScript的常量区
 ===
 
-
-===
 more...
-===
