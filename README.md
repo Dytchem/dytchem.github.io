@@ -1,7 +1,7 @@
-# ![dytchem.github.io](dytchem.github.io)
+# ![dytchem.github.io](https://dytchem.github.io/)
 Web主页
 
-# ![./maze.html](./maze.html)
+# ![./maze.html](https://dytchem.github.io/maze.html)
 趣味迷宫 - 学校Web程序设计选修课大作业
 ![屏幕截图1](assets/屏幕截图(705).png)
 ![屏幕截图2](assets/屏幕截图(706).png)
