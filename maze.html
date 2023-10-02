@@ -501,8 +501,8 @@
             brd.appendChild(this.show2);
         }
         release(player) {
-            this.show1.style.top = (player.y - 1) * size + d0 + "px";
-            this.show2.style.left = (player.x - 1) * size + d0 + "px";
+            this.show1.style.top = (player.y - 1) * size + d0 + 1 + "px";
+            this.show2.style.left = (player.x - 1) * size + d0 + 1 + "px";
             this.show1.style.display = this.show2.style.display = "inline";
             setTimeout(() => { this.show1.style.display = this.show2.style.display = "none"; }, 500);
         }
