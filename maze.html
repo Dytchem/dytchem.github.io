@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>趣味走迷宫</title>
     <style>
         .number {
@@ -521,6 +522,17 @@
         document.getElementById("wKey").style.display = document.getElementById("aKey").style.display
             = document.getElementById("sKey").style.display = document.getElementById("dKey").style.display = "none"
     }
+
+    // 禁止双击放大 - 来自网络
+    var lastTouchEnd = 0;
+    document.documentElement.addEventListener('touchend', function (event) {
+        var now = Date.now();
+        if (now - lastTouchEnd <= 300)
+        {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
 
 </script>
 
