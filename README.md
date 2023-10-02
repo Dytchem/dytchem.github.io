@@ -1,12 +1,14 @@
-# dytchem.github.io
-Web主页
+# Dytchem's Web主页
+[dytchem.github.io](https://dytchem.github.io/)
 
-# ./maze.html
-趣味迷宫 - 学校Web程序设计选修课大作业
+
+
+# 趣味迷宫 - 学校Web程序设计选修课大作业
+[./maze.html](https://dytchem.github.io/maze.html)
+
 ![屏幕截图1](assets/屏幕截图(705).png)
 ![屏幕截图2](assets/屏幕截图(706).png)
 
-# 欢迎来到《趣味走迷宫》！！！
 玩法：
 1. 你是蓝色方块，可按W、S、A、D键在迷宫里进行上、下、左、右移动
 2. 你的目标是到达黄色地标，这会使你的Score加1
@@ -16,5 +18,10 @@ Web主页
 6. 你可以按空格键以Score减1的代价发出十字冲击波，它能消灭命中的敌人并同时得到友人的效果
 7. 当你的Health为0时，游戏结束，你仍然可以继续游玩，但Health会为红色——刷新网页以重新游戏
 8. 在游戏中去争取尽可能大的Score吧
+
 注意：
 所有的相关参量都可以通过HTML源码修改，若需游戏平衡性调整可自行进行修改，它们主要集中在JavaScript的常量区
+
+
+
+more...
