@@ -1,12 +1,13 @@
 # Dytchem's Web主页
 [dytchem.github.io](https://dytchem.github.io/)
 
+
+
 # 趣味迷宫 - 学校Web程序设计选修课大作业
 [./maze.html](https://dytchem.github.io/maze.html)
+
 ![屏幕截图1](assets/屏幕截图(705).png)
 ![屏幕截图2](assets/屏幕截图(706).png)
-
-## 欢迎来到《趣味走迷宫》！！！
 
 玩法：
 1. 你是蓝色方块，可按W、S、A、D键在迷宫里进行上、下、左、右移动
