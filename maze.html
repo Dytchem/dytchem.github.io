@@ -103,6 +103,7 @@
         }
 
         .wasd-keys button {
+            display: none;
             width: 100px;
             height: 100px;
             font-size: 80px;
@@ -500,39 +501,28 @@
     let s = new Summon(g, b);
 
     // 移动端适配 - Powered By YiYan
-    document.getElementById("wKey").addEventListener("click", function () {
-        e.key = "w";
-        p.handleKeyPress(e);
-    });
-    document.getElementById("aKey").addEventListener("click", function () {
-        e.key = "a";
-        p.handleKeyPress(e);
-    });
-    document.getElementById("sKey").addEventListener("click", function () {
-        e.key = "s";
-        p.handleKeyPress(e);
-    });
-    document.getElementById("dKey").addEventListener("click", function () {
-        e.key = "d";
-        p.handleKeyPress(e);
-    });
-
-    if (navigator.maxTouchPoints <= 0)
+    if (navigator.maxTouchPoints > 0)
     {
-        document.getElementById("wKey").style.display = document.getElementById("aKey").style.display
-            = document.getElementById("sKey").style.display = document.getElementById("dKey").style.display = "none"
-    }
 
-    // 禁止双击放大 - 来自网络
-    var lastTouchEnd = 0;
-    document.documentElement.addEventListener('touchend', function (event) {
-        var now = Date.now();
-        if (now - lastTouchEnd <= 300)
-        {
-            event.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, false);
+        document.getElementById("wKey").addEventListener("click", function () {
+            e.key = "w";
+            p.handleKeyPress(e);
+        });
+        document.getElementById("aKey").addEventListener("click", function () {
+            e.key = "a";
+            p.handleKeyPress(e);
+        });
+        document.getElementById("sKey").addEventListener("click", function () {
+            e.key = "s";
+            p.handleKeyPress(e);
+        });
+        document.getElementById("dKey").addEventListener("click", function () {
+            e.key = "d";
+            p.handleKeyPress(e);
+        });
+        document.getElementById("wKey").style.display = document.getElementById("aKey").style.display
+            = document.getElementById("sKey").style.display = document.getElementById("dKey").style.display = "inline"
+    }
 
 </script>
 
