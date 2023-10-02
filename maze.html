@@ -289,9 +289,9 @@
                     {
                         let tmp;
                         if (tmp = this.check.visGood[this.x][i]) tmp.stop();
-                        if (tmp = this.check.visBad[this.x][i]) ++health, tmp.stop();
+                        if (tmp = this.check.visBad[this.x][i]) tmp.silentStop();
                         if (tmp = this.check.visGood[i][this.y]) tmp.stop();
-                        if (tmp = this.check.visBad[i][this.y]) ++health, tmp.stop();
+                        if (tmp = this.check.visBad[i][this.y]) tmp.silentStop();
                     }
                     break;
             }
@@ -411,6 +411,12 @@
                 alert("You lose!!!");
                 hlt.style.color = "red";
             }
+        }
+        silentStop() {
+            prs.textContent = "Score: " + score + "   Enemy: " + --bad + "   Friend: " + good;
+            clearInterval(this.timer);
+            this.show.style.display = "none";
+            this.vis[this.x][this.y] = false;
         }
         move() {
             let choices = [0, 1, 2, 3];
