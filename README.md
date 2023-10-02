@@ -1,9 +1,9 @@
-# Dytchem's Web主页
+# Dytchem's GitHub Web
 [dytchem.github.io](https://dytchem.github.io/)
 
 
 
-# 趣味迷宫 - 学校Web程序设计选修课大作业
+## 趣味迷宫 - 学校Web程序设计选修课大作业
 [./maze.html](https://dytchem.github.io/maze.html)
 
 ![屏幕截图1](assets/maze1.png)
@@ -24,4 +24,4 @@
 
 
 
-#more...
+## more...
