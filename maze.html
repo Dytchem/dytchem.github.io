@@ -102,7 +102,9 @@
         }
 
         .wasd-keys button {
-            font-size: 30px;
+            width: 100px;
+            height: 100px;
+            font-size: 80px;
             font-weight: bold;
         }
     </style>
@@ -113,13 +115,14 @@
     <h2 id="person" class="number">Score: 0 &nbsp; Enemy: 0 &nbsp; Friend: 0</h2>
     <div id="container">
         <div id="board"><canvas id="cvs" width="500" height="500"></canvas></div>
+        <div class="wasd-keys">
+            <button id="wKey">W</button>
+            <button id="aKey">A</button>
+            <button id="sKey">S</button>
+            <button id="dKey">D</button>
+        </div>
     </div>
-    <div class="wasd-keys">
-        <button id="wKey">W</button>
-        <button id="aKey">A</button>
-        <button id="sKey">S</button>
-        <button id="dKey">D</button>
-    </div>
+
 </body>
 
 <script>
@@ -512,6 +515,12 @@
         e.key = "d";
         p.handleKeyPress(e);
     });
+
+    if (false && navigator.maxTouchPoints <= 0)
+    {
+        document.getElementById("wKey").style.display = document.getElementById("aKey").style.display
+            = document.getElementById("sKey").style.display = document.getElementById("dKey").style.display = "none"
+    }
 
 </script>
 
