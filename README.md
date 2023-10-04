@@ -4,11 +4,10 @@
 
 
 ## 趣味迷宫 - 学校Web程序设计选修课大作业
-[./maze.html](https://dytchem.github.io/maze.html)
-[./maze(hard).html](https://dytchem.github.io/maze(hard).html)
+- [Normal Edition](https://dytchem.github.io/maze.html)
+- [Hard Edition](https://dytchem.github.io/maze(hard).html)
 
-![屏幕截图1](assets/maze1.jpg)
-![屏幕截图2](assets/maze2.jpg)
+![场景图](index.files/image001.png)
 
 玩法：
 1. 你是蓝色方块，可按W、S、A、D键在迷宫里进行上、下、左、右移动
