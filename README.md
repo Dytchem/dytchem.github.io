@@ -7,8 +7,8 @@
 [./maze.html](https://dytchem.github.io/maze.html)
 [./maze(hard).html](https://dytchem.github.io/maze(hard).html)
 
-![屏幕截图1](assets/maze1.png)
-![屏幕截图2](assets/maze2.png)
+![屏幕截图1](assets/maze1.jpg)
+![屏幕截图2](assets/maze2.jpg)
 
 玩法：
 1. 你是蓝色方块，可按W、S、A、D键在迷宫里进行上、下、左、右移动
