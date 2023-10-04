@@ -186,8 +186,7 @@
             this.vis[x][y] = true;
             let choices = [0, 1, 2, 3];
             choices.sort(() => { return 0.5 - Math.random(); });
-            for (let i of choices)
-            {
+            for (let i of choices) {
                 let x1 = x + dx[i], y1 = y + dy[i];
                 if (this.vis[x1][y1]) continue;
                 this.cells[x][y][dr[i]] = this.cells[x1][y1][dr[3 - i]] = false;
@@ -195,11 +194,9 @@
             }
         }
         update() { // 破树成图，避免唯一路径被Enemy堵死
-            for (let i = 0; i < updateTime; ++i)
-            {
+            for (let i = 0; i < updateTime; ++i) {
                 let x0, y0, j;
-                do
-                {
+                do {
                     x0 = Math.floor(Math.random() * (level - 3)) + 2;
                     y0 = Math.floor(Math.random() * (level - 3)) + 2;
                     j = Math.floor(Math.random() * 4);
@@ -210,25 +207,20 @@
         }
         draw() { // 绘制迷宫
             ctx.beginPath();
-            for (let i = 1; i <= level; ++i) for (let j = 1; j <= level; ++j)
-            {
-                if (this.cells[i][j].w)
-                {
+            for (let i = 1; i <= level; ++i) for (let j = 1; j <= level; ++j) {
+                if (this.cells[i][j].w) {
                     ctx.moveTo((i - 1) * size, (j - 1) * size);
                     ctx.lineTo(i * size, (j - 1) * size);
                 }
-                if (this.cells[i][j].s)
-                {
+                if (this.cells[i][j].s) {
                     ctx.moveTo((i - 1) * size, j * size);
                     ctx.lineTo(i * size, j * size);
                 }
-                if (this.cells[i][j].a)
-                {
+                if (this.cells[i][j].a) {
                     ctx.moveTo((i - 1) * size, (j - 1) * size);
                     ctx.lineTo((i - 1) * size, j * size);
                 }
-                if (this.cells[i][j].d)
-                {
+                if (this.cells[i][j].d) {
                     ctx.moveTo(i * size, (j - 1) * size);
                     ctx.lineTo(i * size, j * size);
                 }
@@ -264,8 +256,7 @@
         }
         handleKeyPress(event) {
             if (this.cells[this.x][this.y][event.key] !== false && event.key != " ") return;
-            switch (event.key)  
-            {
+            switch (event.key) {
                 case "w":
                     this.y--;
                     this.location();
@@ -285,8 +276,7 @@
                 case " ":
                     this.waves.release(this);
                     prs.textContent = "Score: " + --score + "   Enemy: " + bad + "   Friend: " + good;
-                    for (let i = 1; i <= level; ++i)
-                    {
+                    for (let i = 1; i <= level; ++i) {
                         let tmp;
                         if (tmp = this.check.visGood[this.x][i]) tmp.stop();
                         if (tmp = this.check.visBad[this.x][i]) tmp.silentStop();
@@ -299,8 +289,7 @@
                 this.check.visGood[this.x][this.y].stop();
             if (this.check.visBad[this.x][this.y])
                 this.check.visBad[this.x][this.y].stop();
-            if (this.x == this.target.x && this.y == this.target.y)
-            {
+            if (this.x == this.target.x && this.y == this.target.y) {
                 prs.textContent = "Score: " + ++score + "   Enemy: " + bad + "   Friend: " + good;
                 this.target.refresh();
             }
@@ -345,8 +334,7 @@
         move() {
             let choices = [0, 1, 2, 3];
             choices.sort(() => { return 0.5 - Math.random(); });
-            for (let i of choices)
-            {
+            for (let i of choices) {
                 let x1 = this.x + dx[i], y1 = this.y + dy[i];
                 if (this.cells[this.x][this.y][dr[i]] || this.vis[x1][y1]) continue;
                 this.vis[this.x][this.y] = false;
@@ -355,8 +343,7 @@
                 this.location();
                 break;
             }
-            if (this.vis[this.player.x][this.player.y])
-            {
+            if (this.vis[this.player.x][this.player.y]) {
                 this.stop();
             }
         }
@@ -369,8 +356,7 @@
         }
         add() {
             for (let i = 0; i < goodsMax; ++i) if (this.persons[i].show.style.display == "none"
-                && this.persons[i].x != this.player.x && this.persons[i].y != this.player.y)
-            {
+                && this.persons[i].x != this.player.x && this.persons[i].y != this.player.y) {
                 prs.textContent = "Score: " + score + "   Enemy: " + bad + "   Friend: " + ++good;
                 this.persons[i].start();
                 break;
@@ -407,8 +393,7 @@
             this.vis[this.x][this.y] = false;
             this.change();
             hlt.textContent = "Health: " + --health;
-            if (health < 1)
-            {
+            if (health < 1) {
                 alert("You lose!!!");
                 hlt.style.color = "red";
             }
@@ -427,8 +412,7 @@
         move() {
             let choices = [0, 1, 2, 3];
             choices.sort(() => { return 0.5 - Math.random(); });
-            for (let i of choices)
-            {
+            for (let i of choices) {
                 let i = Math.floor(Math.random() * 4);
                 let x1 = this.x + dx[i], y1 = this.y + dy[i];
                 if (this.cells[this.x][this.y][dr[i]] || this.vis[x1][y1]) continue;
@@ -438,8 +422,7 @@
                 this.location();
                 break;
             }
-            if (this.vis[this.player.x][this.player.y])
-            {
+            if (this.vis[this.player.x][this.player.y]) {
                 this.stop();
             }
         }
@@ -452,8 +435,7 @@
         }
         add() {
             for (let i = 0; i < badsMax; ++i) if (this.persons[i].show.style.display == "none"
-                && this.persons[i].x != this.player.x && this.persons[i].y != this.player.y)
-            {
+                && this.persons[i].x != this.player.x && this.persons[i].y != this.player.y) {
                 prs.textContent = "Score: " + score + "   Enemy: " + ++bad + "   Friend: " + good;
                 this.persons[i].start();
                 break;
@@ -519,8 +501,7 @@
     let s = new Summon(g, b);
 
     // 移动端适配 - Powered By YiYan
-    if (navigator.maxTouchPoints > 0)
-    {
+    if (navigator.maxTouchPoints > 0) {
 
         document.getElementById("wKey").addEventListener("click", function () {
             e.key = "w";
