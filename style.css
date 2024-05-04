@@ -1,0 +1,51 @@
+body {
+    font-family: '等线', sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+* {
+    text-align: center;
+}
+
+p a {
+    display: inline-block;
+    text-align: left;
+}
+
+h1 {
+    font-size: 42.0pt;
+    line-height: 240%;
+}
+
+h2 {
+    font-family: '等线 Light', sans-serif;
+    font-weight: normal;
+    text-align: center;
+    margin-top: 13.0pt;
+    margin-bottom: 13.0pt;
+}
+
+p {
+    margin: 0;
+}
+
+.subtitle {
+    font-family: '等线', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+a {
+    color: #0563C1;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
