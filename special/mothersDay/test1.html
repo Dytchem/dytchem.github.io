@@ -64,7 +64,16 @@
     </main>
 
     <script>
-        document.getElementById('heart').addEventListener('dragstart', function (event) {
+        const heart = document.getElementById('heart');
+        const image = document.getElementById('clickableImage');
+        const images = ['src/image1.jpg', 'src/image2.jpg'];
+        image_cur = 0;
+        image.addEventListener('click', function () {
+            image_cur = (image_cur + 1) % images.length;
+            image.src = images[image_cur];
+        });
+
+        heart.addEventListener('dragstart', function (event) {
             event.dataTransfer.setData('text/plain', ''); // 防止拖放时文本被复制
         });
 
@@ -72,12 +81,11 @@
             event.preventDefault(); // 允许元素被拖放到目标位置
         });
 
-        // document.addEventListener('drop', function (event) {
-        //     event.preventDefault(); // 阻止默认的处理方式
-        //     const heart = document.getElementById('heart');
-        //     heart.style.top = event.clientY + 'px';
-        //     heart.style.left = event.clientX + 'px';
-        // });
+        document.addEventListener('drop', function (event) {
+            event.preventDefault(); // 阻止默认的处理方式
+            heart.style.top = event.clientY - heart.offsetHeight / 2 + 'px';
+            heart.style.left = event.clientX - heart.offsetWidth / 2 + 'px';
+        });
     </script>
 
     <footer>
