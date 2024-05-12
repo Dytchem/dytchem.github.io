@@ -36,7 +36,7 @@
             color: #999;
         }
 
-        .heart {
+        .item {
             font-size: 85px;
             color: red;
             width: 100px;
@@ -58,26 +58,34 @@
     <main>
         <p class="greeting">感谢您一直以来的辛勤付出和无私的爱！</p>
         <p class="greeting">祝愿您平安喜乐，万事胜意！！！👍</p>
-        <div id="heart" class="heart" draggable="true">♥</div>
+        <div id="flower" class="item" draggable="true">🌸</div>
+        <div id="gift" class="item" draggable="true">🎁</div>
         <img id="clickableImage" class="image" src="src/image1.jpg" alt="生活照">
         <p id="signature"> 😘 您的儿子 黄得清 😘</p>
     </main>
 
     <script>
-        const heart = document.getElementById('heart');
+        const gift = document.getElementById('gift');
+        const flower = document.getElementById('flower');
         const image = document.getElementById('clickableImage');
         const signature = document.getElementById('signature');
         const images = ['src/image1.jpg', 'src/image2.jpg', 'src/image3.jpg'];
+
         image_cur = 0;
         function change() {
             image_cur = (image_cur + 1) % images.length;
             image.src = images[image_cur];
             image.addEventListener('click', change);
         }
-
         setInterval(change, 3000);
 
-        heart.addEventListener('dragstart', function (event) {
+        flower.style.display = 'none';
+        gift.addEventListener('click', function () {
+            flower.style.display = 'block';
+            gift.style.display = 'none';
+        });
+
+        flower.addEventListener('dragstart', function (event) {
             event.dataTransfer.setData('text/plain', ''); // 防止拖放时文本被复制
         });
 
@@ -90,10 +98,10 @@
 
         document.addEventListener('drop', function (event) {
             event.preventDefault(); // 阻止默认的处理方式
-            let x = event.clientY - heart.offsetHeight / 2;
-            let y = event.clientX - heart.offsetWidth / 2;
-            heart.style.top = x + 'px';
-            heart.style.left = y + 'px';
+            let x = event.clientY - flower.offsetHeight / 2;
+            let y = event.clientX - flower.offsetWidth / 2;
+            flower.style.top = x + 'px';
+            flower.style.left = y + 'px';
             console.log(x, y);
             if (x > rect.top && x < rect.bottom && y > rect.left && y < rect.right) alert("OK");
         });
