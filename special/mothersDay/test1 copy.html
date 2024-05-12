@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>母亲节祝福</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 50px;
+        }
+
+        .greeting {
+            font-size: 24px;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        .image {
+            width: 300px;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .signature {
+            font-size: 18px;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>亲爱的妈妈，母亲节快乐！</h1>
+    </header>
+
+    <main>
+        <p class="greeting">感谢您一直以来的辛勤付出和无私的爱，祝愿您平安喜乐，万事胜意！！！</p>
+        <div class="image-slider img">
+            <img class="mother-image" src="src/image1.jpg" alt="生活照" class="active">
+            <img class="mother-image" src="src/image1.jpg" alt="生活照">
+            <!-- 添加更多图片，保持类名一致 -->
+        </div>
+        <p class="signature">—— 您的儿子 黄得清</p>
+    </main>
+
+    <!-- 如果有音乐或动画，可以在这里添加 -->
+
+    <script>
+        function rotateImages() {
+            const images = document.querySelectorAll('.image-slider img');
+            let currentIndex = 0;
+
+            function nextImage() {
+                images[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % images.length;
+                images[currentIndex].classList.add('active');
+            }
+
+            setInterval(nextImage, 2000); // 每2秒切换一次图片
+        }
+
+        document.addEventListener('DOMContentLoaded', rotateImages);
+    </script>
+
+    <footer>
+        <p>&copy; 2024 Dytchem</p>
+    </footer>
+</body>
+
+</html>
