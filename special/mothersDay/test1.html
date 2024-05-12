@@ -48,10 +48,9 @@
             cursor: move;
         }
 
-        /* #heart {
-            top: 63%;
-            left: 46%;
-        } */
+        #heart {
+            display: none;
+        }
     </style>
 </head>
 
@@ -63,34 +62,53 @@
     <main>
         <p class="greeting">感谢您一直以来的辛勤付出和无私的爱！</p>
         <p class="greeting">祝愿您平安喜乐，万事胜意！！！👍</p>
-        <div id="heart" class="item" draggable="true">♥</div>
+        <div class="image-container">
+            <img id="clickableImage" class="image" src="src/image1.jpg" alt="生活照">
+            <div id="heart" class="item" draggable="true">♥</div>
+        </div>
         <div id="gift" class="item" draggable="true">🎁</div>
-        <img id="clickableImage" class="image" src="src/image1.jpg" alt="生活照">
         <p id="signature"> 😘 您的儿子 黄得清 😘</p>
     </main>
 
     <script>
+        function getAbsolutePosition(element) {
+            let xPosition = 0;
+            let yPosition = 0;
+            while (element) {
+                xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+                yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+                element = element.offsetParent;
+            }
+            return {
+                x: xPosition,
+                y: yPosition
+            };
+        }
+
         const gift = document.getElementById('gift');
         const heart = document.getElementById('heart');
         const image = document.getElementById('clickableImage');
-        const rect = image.getBoundingClientRect();
-        console.log(rect.top, rect.bottom, rect.left, rect.right);
-        const k1 = 0.4, k2 = 0.72;
-        heart.style.display = 'none';
-        heart.style.top = k1 * rect.top + (1 - k1) * rect.bottom + 'px';
-        heart.style.left = k2 * rect.left + (1 - k2) * rect.right + 'px';
+
+        const position = getAbsolutePosition(image);
+        console.log('图片的绝对位置：', position);
+
+        const k1 = 0.21, k2 = 0.8;
+        function setHeartPosition() {
+            heart.style.left = `${k1 * image.offsetHeight + position.x}px`;
+            heart.style.top = `${k2 * image.offsetWidth + position.y}px`;
+        }
 
         images = ['src/image1.jpg', 'src/image2.jpg', 'src/image3.jpg'];
         image_cur = 0;
         function change() {
             image_cur = (image_cur + 1) % images.length;
             image.src = images[image_cur];
-            image.addEventListener('click', change);
         }
         setInterval(change, 3000);
 
         gift_cur = 0;
         gift.addEventListener('click', function () {
+            setHeartPosition()
             if (++gift_cur > 9) {
                 heart.style.display = 'block';
                 gift.style.display = 'none';
@@ -114,6 +132,10 @@
             heart.style.top = event.clientY - heart.offsetHeight / 2 + 'px';
             heart.style.left = event.clientX - heart.offsetWidth / 2 + 'px';
         });
+
+        if (image.complete) {
+            setHeartPosition();
+        }  
     </script>
 
     <footer>
