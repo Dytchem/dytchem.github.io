@@ -48,10 +48,10 @@
             cursor: move;
         }
 
-        #heart {
+        /* #heart {
             top: 63%;
             left: 46%;
-        }
+        } */
     </style>
 </head>
 
@@ -73,9 +73,14 @@
         const gift = document.getElementById('gift');
         const heart = document.getElementById('heart');
         const image = document.getElementById('clickableImage');
-        const signature = document.getElementById('signature');
-        images = ['src/image1.jpg', 'src/image2.jpg', 'src/image3.jpg'];
+        const rect = image.getBoundingClientRect();
+        console.log(rect.top, rect.bottom, rect.left, rect.right);
+        const k1 = 0.4, k2 = 0.72;
+        heart.style.display = 'none';
+        heart.style.top = k1 * rect.top + (1 - k1) * rect.bottom + 'px';
+        heart.style.left = k2 * rect.left + (1 - k2) * rect.right + 'px';
 
+        images = ['src/image1.jpg', 'src/image2.jpg', 'src/image3.jpg'];
         image_cur = 0;
         function change() {
             image_cur = (image_cur + 1) % images.length;
@@ -84,10 +89,9 @@
         }
         setInterval(change, 3000);
 
-        heart.style.display = 'none';
         gift_cur = 0;
         gift.addEventListener('click', function () {
-            if (++gift_cur > 10) {
+            if (++gift_cur > 9) {
                 heart.style.display = 'block';
                 gift.style.display = 'none';
                 images.push('src/hidden.jpg', 'src/hidden.jpg', 'src/hidden.jpg');
@@ -105,17 +109,10 @@
             event.preventDefault(); // 允许元素被拖放到目标位置
         });
 
-        rect = signature.getBoundingClientRect();
-        console.log(rect.top, rect.bottom, rect.left, rect.right);
-
         document.addEventListener('drop', function (event) {
             event.preventDefault(); // 阻止默认的处理方式
-            let x = event.clientY - heart.offsetHeight / 2;
-            let y = event.clientX - heart.offsetWidth / 2;
-            heart.style.top = x + 'px';
-            heart.style.left = y + 'px';
-            // console.log(x, y);
-            // if (x > rect.top && x < rect.bottom && y > rect.left && y < rect.right) alert("OK");
+            heart.style.top = event.clientY - heart.offsetHeight / 2 + 'px';
+            heart.style.left = event.clientX - heart.offsetWidth / 2 + 'px';
         });
     </script>
 
