@@ -64,12 +64,6 @@
     </main>
 
     <script>
-        document.getElementById('clickableImage').addEventListener('click', function () {
-            this.src = 'src/image2.jpg'; // 替换为第二张图片的源
-            // setTimeout(() => {
-            //     this.src = 'src/image1.jpg'; // 在动画结束后恢复原图，可选
-            // }, 1000); // 动画持续1秒，可根据需要调整
-        });
         document.getElementById('heart').addEventListener('dragstart', function (event) {
             event.dataTransfer.setData('text/plain', ''); // 防止拖放时文本被复制
         });
@@ -78,12 +72,12 @@
             event.preventDefault(); // 允许元素被拖放到目标位置
         });
 
-        document.addEventListener('drop', function (event) {
-            event.preventDefault(); // 阻止默认的处理方式
-            const heart = document.getElementById('heart');
-            heart.style.top = event.clientY + 'px';
-            heart.style.left = event.clientX + 'px';
-        });
+        // document.addEventListener('drop', function (event) {
+        //     event.preventDefault(); // 阻止默认的处理方式
+        //     const heart = document.getElementById('heart');
+        //     heart.style.top = event.clientY + 'px';
+        //     heart.style.left = event.clientX + 'px';
+        // });
     </script>
 
     <footer>
