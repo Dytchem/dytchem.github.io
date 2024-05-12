@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>长存的祝福（2024）</title>
+    <title>母亲节祝福（2024）</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,7 +31,7 @@
             margin: 20px 0;
         }
 
-        .signature {
+        #signature {
             font-size: 18px;
             color: #999;
         }
@@ -60,12 +60,13 @@
         <p class="greeting">祝愿您平安喜乐，万事胜意！！！👍</p>
         <div id="heart" class="heart" draggable="true">♥</div>
         <img id="clickableImage" class="image" src="src/image1.jpg" alt="生活照">
-        <p class="signature"> 您的儿子 黄得清 😘</p>
+        <p id="signature"> 😘 您的儿子 黄得清 😘</p>
     </main>
 
     <script>
         const heart = document.getElementById('heart');
         const image = document.getElementById('clickableImage');
+        const signature = document.getElementById('signature');
         const images = ['src/image1.jpg', 'src/image2.jpg', 'src/image3.jpg'];
         image_cur = 0;
         function change() {
@@ -73,6 +74,8 @@
             image.src = images[image_cur];
             image.addEventListener('click', change);
         }
+
+        setInterval(change, 3000);
 
         heart.addEventListener('dragstart', function (event) {
             event.dataTransfer.setData('text/plain', ''); // 防止拖放时文本被复制
@@ -82,12 +85,18 @@
             event.preventDefault(); // 允许元素被拖放到目标位置
         });
 
+        rect = signature.getBoundingClientRect();
+        console.log(rect.top, rect.bottom, rect.left, rect.right);
+
         document.addEventListener('drop', function (event) {
             event.preventDefault(); // 阻止默认的处理方式
-            heart.style.top = event.clientY - heart.offsetHeight / 2 + 'px';
-            heart.style.left = event.clientX - heart.offsetWidth / 2 + 'px';
+            let x = event.clientY - heart.offsetHeight / 2;
+            let y = event.clientX - heart.offsetWidth / 2;
+            heart.style.top = x + 'px';
+            heart.style.left = y + 'px';
+            console.log(x, y);
+            if (x > rect.top && x < rect.bottom && y > rect.left && y < rect.right) alert("OK");
         });
-        setInterval(change, 3000);
     </script>
 
     <footer>
