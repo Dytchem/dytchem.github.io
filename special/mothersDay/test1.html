@@ -42,8 +42,8 @@
             width: 100px;
             height: 100px;
             position: absolute;
-            top: 90%;
-            left: 90%;
+            top: 80%;
+            left: 80%;
             transform-origin: bottom;
             cursor: move;
         }
@@ -66,12 +66,13 @@
     <script>
         const heart = document.getElementById('heart');
         const image = document.getElementById('clickableImage');
-        const images = ['src/image1.jpg', 'src/image2.jpg'];
+        const images = ['src/image1.jpg', 'src/image2.jpg', 'src/image3.jpg'];
         image_cur = 0;
-        image.addEventListener('click', function () {
+        function change() {
             image_cur = (image_cur + 1) % images.length;
             image.src = images[image_cur];
-        });
+            image.addEventListener('click', change);
+        }
 
         heart.addEventListener('dragstart', function (event) {
             event.dataTransfer.setData('text/plain', ''); // 防止拖放时文本被复制
@@ -86,6 +87,7 @@
             heart.style.top = event.clientY - heart.offsetHeight / 2 + 'px';
             heart.style.left = event.clientX - heart.offsetWidth / 2 + 'px';
         });
+        setInterval(change, 3000);
     </script>
 
     <footer>
