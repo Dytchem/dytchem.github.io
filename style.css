@@ -76,9 +76,9 @@ main article:not(:last-child)::after {
 }
 
 #splash-screen img {
-    max-width: 200px;
+    max-width: 50px;
     /* 最大宽度 */
-    max-height: 200px;
+    max-height: 50px;
     /* 最大高度 */
     object-fit: contain;
     /* 确保图片内容完整显示 */
