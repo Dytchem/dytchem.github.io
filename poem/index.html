@@ -38,7 +38,6 @@
 
         .card-title {
             text-align: center;
-            cursor: pointer;
             font-size: 1.5em;
             margin: 0 auto 0.5em auto;
             /* 减少底部 margin */
@@ -128,10 +127,27 @@
             const card = document.createElement('div');
             card.className = 'poetry-card';
 
+            let isMouseDown = false;
+            let mouseDownX = 0;
+            let mouseDownY = 0;
+            const threshold = 5; // 设置阈值
+
+            card.addEventListener('mousedown', (event) => {
+                isMouseDown = true;
+                mouseDownX = event.clientX;
+                mouseDownY = event.clientY;
+            });
+
+            card.addEventListener('mouseup', (event) => {
+                if (isMouseDown && Math.abs(event.clientX - mouseDownX) < threshold && Math.abs(event.clientY - mouseDownY) < threshold) {
+                    toggleContent(card);
+                }
+                isMouseDown = false;
+            });
+
             const titleElement = document.createElement('div');
             titleElement.className = 'card-title';
             titleElement.textContent = title;
-            titleElement.addEventListener('click', () => toggleContent(card));
             card.appendChild(titleElement);
 
             // 添加时间信息
