@@ -1,2 +1,2 @@
 # Dytchem's GitHub Web
-![dytchem.github.io](Dytchem 的个人主页)
+[Dytchem 的个人主页](dytchem.github.io)
