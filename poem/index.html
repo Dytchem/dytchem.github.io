@@ -1,1 +1,77 @@
-建设中……
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>诗歌集锦</title>
+    <style>
+        /* 简单的样式 */
+        .poetry-card {
+            border: 1px solid #ccc;
+            margin-bottom: 1em;
+            padding: 1em;
+        }
+
+        .card-title {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .card-content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="poetry-container"></div>
+
+    <script>
+        // 获取诗歌容器
+        const container = document.getElementById('poetry-container');
+
+        // 读取诗歌数据
+        fetch('data.txt')
+            .then(response => response.text())
+            .then(data => {
+                // 使用正则表达式分割诗歌
+                const poems = data.match(/@[\s\S]*?(?=@|$)/g);
+                poems.forEach(poem => {
+                    // 分离标题和内容
+                    const [title, ...content] = poem.split('\n');
+                    const card = createPoetryCard(title.substring(1), content.join('\n'));
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error loading poetry:', error));
+
+        function createPoetryCard(title, content) {
+            const card = document.createElement('div');
+            card.className = 'poetry-card';
+
+            const titleElement = document.createElement('div');
+            titleElement.className = 'card-title';
+            titleElement.textContent = title;
+            titleElement.addEventListener('click', () => toggleContent(card));
+            card.appendChild(titleElement);
+
+            const contentElement = document.createElement('div');
+            contentElement.className = 'card-content';
+            contentElement.innerHTML = content.replace(/\n/g, '<br>');
+            card.appendChild(contentElement);
+
+            return card;
+        }
+
+        function toggleContent(card) {
+            const content = card.querySelector('.card-content');
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

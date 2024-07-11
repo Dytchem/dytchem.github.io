@@ -1,0 +1,39 @@
+body {
+    font-family: 'Times New Roman', serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+header,
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.poetry-card {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-content {
+    display: block;
+    white-space: pre-wrap;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
