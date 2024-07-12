@@ -69,6 +69,8 @@
             display: none;
             font-size: 1.2em;
             margin-top: 1em;
+            margin-bottom: -0.85em;
+            /* 调整底部外边距 */
             transition: all 0.3s ease;
         }
 
@@ -112,7 +114,7 @@
         <h1>Dytchem的诗词空间</h1>
     </header>
     <div class="center-button">
-        <button id="toggle-all-cards">展开/折叠全部卡片</button>
+        <button id="toggle-all-cards">展开全部卡片</button>
     </div>
     <div id="poetry-container"></div>
     <footer>
@@ -200,12 +202,16 @@
         }
 
         // 添加事件监听器以控制所有卡片的显示
+        let isExpanded = false; // 初始状态为折叠
         document.getElementById('toggle-all-cards').addEventListener('click', () => {
             const cards = document.querySelectorAll('.poetry-card');
-            const action = cards[0].querySelector('.card-content').style.display === 'none' ? 'block' : 'none';
+            const action = isExpanded ? 'none' : 'block';
             cards.forEach(card => {
                 card.querySelector('.card-content').style.display = action;
             });
+
+            document.getElementById('toggle-all-cards').textContent = isExpanded ? '展开全部卡片' : '折叠全部卡片';
+            isExpanded = !isExpanded;
         });
     </script>
 </body>
