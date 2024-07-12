@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>诗词空间</title>
+    <title>Dytchem的诗词空间</title>
     <style>
         body {
             background-color: #f5f5f5;
@@ -21,7 +21,6 @@
 
         h1,
         h3 {
-            /* font-size: 2em; */
             margin: 0 auto;
             text-align: center;
             font-family: 'Times New Roman', sans-serif;
@@ -34,14 +33,26 @@
             margin: 1em auto;
             max-width: 800px;
             padding: 1em;
+            position: relative;
+            /* 新增 */
             transition: all 0.3s ease;
+        }
+
+        .poetry-card::before {
+            content: attr(data-number);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.2em;
+            color: #dddddd;
+            /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
+            z-index: 1;
         }
 
         .card-title {
             text-align: center;
             font-size: 1.5em;
             margin: 0 auto 0.5em auto;
-            /* 减少底部 margin */
             transition: all 0.3s ease;
             font-family: '黑体', sans-serif;
         }
@@ -51,7 +62,6 @@
             font-size: 0.8em;
             color: #666;
             margin-top: 0.2em;
-            /* 减少顶部 margin */
         }
 
         .card-content {
@@ -64,6 +74,10 @@
 
         .card-content p {
             font-family: '宋体', serif;
+        }
+
+        footer {
+            padding-bottom: 50px;
         }
 
         @media screen and (max-width: 600px) {
@@ -83,6 +97,13 @@
                 font-size: 1em;
             }
         }
+
+        .center-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100px; */
+        }
     </style>
 </head>
 
@@ -90,11 +111,16 @@
     <header>
         <h1>Dytchem的诗词空间</h1>
     </header>
+    <div class="center-button">
+        <button id="toggle-all-cards">展开/折叠全部卡片</button>
+    </div>
     <div id="poetry-container"></div>
     <footer>
         <h3>&copy; 2024 Dychem. All rights reserved.</h3>
     </footer>
     <script>
+        let cardCount = 1; // 初始化计数器
+
         // 获取诗歌容器
         const container = document.getElementById('poetry-container');
 
@@ -102,24 +128,19 @@
         fetch('data.txt')
             .then(response => response.text())
             .then(data => {
-                // 使用正则表达式分割诗歌，确保每首诗都是从@开始
                 const poems = data.match(/@[\s\S]*?(?=@|$)/g);
                 poems.forEach(poem => {
-                    // 分离标题、时间和内容
                     const lines = poem.split('\n').filter(line => line.trim() !== '');
                     let title = '';
-                    let time = 'unknown'; // 默认设为"unknown"
+                    let time = 'unknown';
                     let content = '';
 
-                    // 第一行是标题
                     title = lines.shift().substring(1).trim();
 
-                    // 检查第二行是否是时间信息
                     if (lines.length > 0 && lines[0].startsWith('$')) {
                         time = lines.shift().substring(1).trim();
                     }
 
-                    // 剩余行构成内容
                     content = lines.join('\n');
                     const card = createPoetryCard(title, content, time);
                     container.appendChild(card);
@@ -130,11 +151,13 @@
         function createPoetryCard(title, content, time) {
             const card = document.createElement('div');
             card.className = 'poetry-card';
+            card.setAttribute('data-number', cardCount); // 添加data-number属性
+            cardCount++; // 增加计数器
 
             let isMouseDown = false;
             let mouseDownX = 0;
             let mouseDownY = 0;
-            const threshold = 5; // 设置阈值
+            const threshold = 5;
 
             card.addEventListener('mousedown', (event) => {
                 isMouseDown = true;
@@ -154,7 +177,6 @@
             titleElement.textContent = title;
             card.appendChild(titleElement);
 
-            // 添加时间信息
             const timeElement = document.createElement('div');
             timeElement.className = 'card-time';
             timeElement.textContent = time;
@@ -176,6 +198,15 @@
                 content.style.display = 'none';
             }
         }
+
+        // 添加事件监听器以控制所有卡片的显示
+        document.getElementById('toggle-all-cards').addEventListener('click', () => {
+            const cards = document.querySelectorAll('.poetry-card');
+            const action = cards[0].querySelector('.card-content').style.display === 'none' ? 'block' : 'none';
+            cards.forEach(card => {
+                card.querySelector('.card-content').style.display = action;
+            });
+        });
     </script>
 </body>
 
