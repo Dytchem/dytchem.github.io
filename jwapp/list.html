@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Redirect Page</title>
+</head>
+
+<body>
+    <script>
+        (async function () {
+            const originalUrl = "http://jwapp.xjtu.edu.cn/app/index?userType=1&employeeNo=2225015585&state=2222&ticket=0&code=0";
+
+            try {
+                const response = await fetch(originalUrl, { method: 'HEAD' });
+                if (response.status === 302 || response.status === 301) {
+                    const locationHeader = response.headers.get('Location');
+                    if (locationHeader) {
+                        window.location.href = new URL('/message/receiver', locationHeader);
+                    } else {
+                        console.error('No Location header found in the response.');
+                    }
+                } else {
+                    console.error(`Unexpected status code: ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Error fetching:', error);
+            }
+        })();
+    </script>
+</body>
+
+</html>
