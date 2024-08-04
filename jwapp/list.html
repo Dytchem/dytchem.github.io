@@ -3,31 +3,35 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Redirect Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Location Header</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 定义要请求的URL
+            const url = "http://jwapp.xjtu.edu.cn/app/index?userType=1&employeeNo=0212020266&state=2222&ticket=0&code=0";
+
+            // 使用fetch API获取URL的响应头
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    // 从响应头中获取Location信息
+                    const locationHeader = response.headers.get('Location');
+                    // 将Location信息显示在页面上
+                    document.getElementById("location").innerText = locationHeader;
+                })
+                .catch(error => {
+                    console.error("Error fetching URL:", error);
+                    document.getElementById("location").innerText = "Error fetching URL";
+                });
+        });
+    </script>
 </head>
 
 <body>
-    <script>
-        (async function () {
-            const originalUrl = "http://jwapp.xjtu.edu.cn/app/index?userType=1&employeeNo=2225015585&state=2222&ticket=0&code=0";
-
-            try {
-                const response = await fetch(originalUrl, { method: 'HEAD' });
-                if (response.status === 302 || response.status === 301) {
-                    const locationHeader = response.headers.get('Location');
-                    if (locationHeader) {
-                        window.location.href = new URL('/message/receiver', locationHeader);
-                    } else {
-                        console.error('No Location header found in the response.');
-                    }
-                } else {
-                    console.error(`Unexpected status code: ${response.status}`);
-                }
-            } catch (error) {
-                console.error('Error fetching:', error);
-            }
-        })();
-    </script>
+    <h1>Location Header Value:</h1>
+    <p id="location">Loading...</p>
 </body>
 
 </html>
