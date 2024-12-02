@@ -1,106 +1,162 @@
+/* 基本重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #f5f5f5;
     font-family: Arial, sans-serif;
-}
-
-.card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    color: #333;
     padding: 20px;
-    margin: 20px;
-}
-
-header,
-main,
-footer {
-    max-width: 800px;
-    margin: auto;
-}
-
-header,
-footer {
-    text-align: center;
+    background-image: url('background.jpg');
+    /* 添加背景图 */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 header {
-    padding: 20px 0;
+    background-color: rgba(76, 175, 80, 0.8);
+    /* 半透明背景 */
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header nav {
+    margin-top: 10px;
+}
+
+header .nav-link {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+header .nav-link:hover {
+    color: #ffeb3b;
+    /* 黄色高亮 */
+}
+
+header a.blog-button {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+header a.blog-button:hover {
+    color: #ffeb3b;
+    /* 黄色高亮 */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.9);
+    /* 半透明背景 */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    /* 鼠标悬停时向上移动 */
+}
+
+.card-header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin-bottom: 10px;
+}
+
+.card a {
+    color: #4CAF50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.card a:hover {
+    color: #ffeb3b;
+    /* 黄色高亮 */
 }
 
 footer {
-    padding: 10px 0;
-}
-
-main .card:not(:last-child) {
-    margin-bottom: 20px;
-}
-
-main section {
-    margin-bottom: 20px;
-}
-
-main section:last-child {
-    margin-bottom: 0;
-}
-
-main section h2 {
-    position: relative;
-    display: block;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-main section h2:after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #ccc;
-}
-
-main article:not(:last-child) {
-    position: relative;
-}
-
-main article:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #ccc;
-}
-
-#splash-screen img {
-    max-width: 50px;
-    /* 最大宽度 */
-    max-height: 50px;
-    /* 最大高度 */
-    object-fit: contain;
-    /* 确保图片内容完整显示 */
-}
-
-.blog-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    /* 绿色背景 */
+    background-color: rgba(51, 51, 51, 0.8);
+    /* 半透明背景 */
     color: white;
-    /* 文字颜色 */
     text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000;
 }
 
-.blog-button:hover {
-    background-color: #45a049;
-    /* 鼠标悬停时改变背景颜色 */
+footer #social-icons {
+    margin-top: 10px;
+}
+
+footer .social-icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    transition: transform 0.3s ease;
+    fill: white;
+    /* 设置SVG图标的颜色 */
+}
+
+footer .social-icon:hover {
+    transform: scale(1.2);
+    /* 放大效果 */
+    fill: #ffeb3b;
+    /* 鼠标悬停时的颜色 */
+}
+
+footer img {
+    width: 50px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+footer img:hover {
+    transform: scale(1.1);
+    /* 放大效果 */
+}
+
+/* 新增样式：去除footer中的下划线 */
+footer a {
+    text-decoration: none;
+    color: inherit;
+    /* 继承父元素的颜色，保持一致性 */
 }
