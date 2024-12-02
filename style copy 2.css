@@ -1,0 +1,204 @@
+body {
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding: 0;
+    background-image: url('background.jpg');
+    /* 添加背景图 */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 800px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    /* 鼠标悬停时向上移动 */
+}
+
+header {
+    background-color: rgba(76, 175, 80, 0.8);
+    /* 半透明背景 */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+header nav {
+    margin-top: 10px;
+}
+
+header .nav-link {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+header .nav-link:hover {
+    color: #ffeb3b;
+    /* 黄色高亮 */
+}
+
+header a.blog-button {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+header a.blog-button:hover {
+    color: #ffeb3b;
+    /* 黄色高亮 */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+main .card:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+main section {
+    margin-bottom: 20px;
+}
+
+main section:last-child {
+    margin-bottom: 0;
+}
+
+main section h2 {
+    position: relative;
+    display: block;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+main section h2:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+}
+
+main article:not(:last-child) {
+    position: relative;
+}
+
+main article:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+}
+
+footer {
+    background-color: rgba(51, 51, 51, 0.8);
+    /* 半透明背景 */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+footer #social-icons {
+    margin-top: 10px;
+}
+
+footer .social-icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    transition: transform 0.3s ease;
+    fill: white;
+    /* 设置SVG图标的颜色 */
+}
+
+footer .social-icon:hover {
+    transform: scale(1.2);
+    /* 放大效果 */
+    fill: #ffeb3b;
+    /* 鼠标悬停时的颜色 */
+}
+
+footer img {
+    width: 50px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+footer img:hover {
+    transform: scale(1.1);
+    /* 放大效果 */
+}
+
+footer a {
+    text-decoration: none;
+    color: inherit;
+    /* 继承父元素的颜色，保持一致性 */
+}
+
+#splash-screen img {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: contain;
+}
+
+.blog-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.blog-button:hover {
+    background-color: #45a049;
+}
